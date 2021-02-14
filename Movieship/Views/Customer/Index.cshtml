@@ -1,0 +1,241 @@
+﻿
+@model IEnumerable<Movieship.Models.Customer>
+
+@{
+    ViewBag.Title = "Customer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container akki">
+    <h2>Customers</h2>
+    <div style="margin-bottom:.4vw">
+        @Html.ActionLink("New Customer", "New", "Customer", null, new { @class = "btn btn-primary" })
+    </div>
+    <table id="customers" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Customer</th>
+                <th>Membership Type</th>
+                <th>Delete</th>
+            </tr>
+
+
+
+        </thead>
+        <tbody>
+            @*@foreach (var m in Model)
+                {
+                    <tr>
+                        <td class="cust-name">@Html.ActionLink(m.Name,"Edit","Customer",new { id = m.Id }) </td>
+                        <td> @m.MemberShip.MenberShipType</td>
+                        <td><button  data-Customer-Id="@m.Id"  class="btn btn-link js-del">Delete</button></td>
+                    </tr>
+                }*@
+
+        </tbody>
+
+    </table>
+
+
+</div>
+
+
+@section scripts
+{
+    <script>
+
+        $(document).ready(function () {
+            var table = $("#customers").DataTable({
+                ajax: {
+                    url: "/api/customer",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "name",
+                        render: function (data, type, customer) {
+                            return "<a href='/customer/edit/" + customer.id + "'>" + customer.name + "</a>";
+                        }
+                    },
+                    {
+                        data: "memberShip.menberShipType"
+                    },
+                    {
+                        data: "id",
+                        render: function (data) {
+                            return "<button class='btn-link js-delete' data-customer-id=" + data + ">Delete</button>";
+                        }
+                    }
+                ]
+            });
+            $("#customers").on("click", ".js-delete", function () {
+                var button = $(this);
+                bootbox.confirm("Are you sure you want to delete this customer?", function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: "/api/customer/" + button.attr("data-customer-id"),
+                            type: 'DELETE',
+                            success: function () {
+                                table.row(button.parents("tr")).remove().draw(); //datatable's api
+                            }
+                        });
+                    }
+                });
+            });
+        });
+
+    </script>
+
+
+}
+
+@*@section scripts
+    {
+            <script>
+                $(document).ready(function () {
+                    var table = $('#customers').DataTable(
+                        {
+                            ajax: {
+                                url: "api/Customer",
+                                dataSrc: ""
+                            },
+                            columns:
+                                [
+                                    {
+                                        data: "name",
+                                        render: function (data, type, customer) {
+                                            return "<a href='/Customer/Edit/" + Customer.id + "'>" + customer.name + "</a>";
+                                        }
+                                    },
+                                    {
+                                        data: "MembershipType.name"
+                                    },
+                                    {
+                                        data: "id",
+                                        render: function (data) {
+                                            return "<button class ='btn btn-link js-del data-Customer-Id=" + data + "> Delete</button>";
+                                        }
+                                    }
+                                ]
+
+
+                        });
+
+                });
+
+                $("#customers").on("click", ".js-del", function () {
+                    var button = $(this);
+
+                    bootbox.confirm("Are you sure you want to delete this customer ?", function (result) {
+                        if (result) {
+                            $.ajax({
+                                url: "/api/Customer/" + button.attr("data-Customer-Id"),
+                                method: "DELETE",
+                                success: function () {
+
+                                    table.row(button.parents("tr")).remove().draw();
+                                }
+                            });
+                        }
+                    });
+                });
+            </script>
+        }*@
+
+
+@*$(document).ready(function () {
+        var table = $("#customers").DataTable({
+            ajax: {
+                url: "/api/customers",
+                dataSrc: ""
+            },
+            columns: [
+                {
+                    data: "name",
+                    render: function(data, type, customer) {
+                        return "<a href='/customers/edit/" + customer.id + "'>" + customer.name + "</a>";
+                    }
+                },
+                {
+                    data: "membershipType.name"
+                },
+                {
+                    data: "id",
+                    render: function(data) {
+                        return "<button class='btn-link js-delete' data-customer-id=" + data + ">Delete</button>";
+                    }
+                }
+            ]
+        });
+        $("#customers").on("click", ".js-delete", function () {
+            var button = $(this);
+            bootbox.confirm("Are you sure you want to delete this customer?", function (result) {
+                if (result) {
+                    $.ajax({
+                        url: "/api/customers/" + button.attr("data-customer-id"),
+                        method: "DELETE",
+                        success: function () {
+                            table.row(button.parents("tr")).remove().draw(); //datatable's api
+                        }
+                    });
+                }
+            });
+        });
+    });*@
+
+@* {
+    ajax: {
+    url: "api/Customer",
+    dataSrc: ""
+           },
+    columns:
+             [
+               {
+                     data: "Name",
+
+     render: function (data, type, Customer) {
+                                return "<a href='/Customer/Edit/" + Customer.Id + "'>" + Customer.Name + "</a>";
+                            }
+               },
+                        {
+                            data: "membership.MenberShipType"
+                        },
+                        {
+    data: "id",
+                            render: function (data) {
+                                return "<button class='btn btn-link js-del data-Customer-Id=" + data + "> Delete</button>";
+                            }
+                        }
+                    ]
+
+
+            });
+
+    }); *@
+
+@*
+
+    $(document).ready(function () {
+
+
+
+
+
+                $("#customers").on("click", ".js-del", function () {
+                    var btn = $(this);
+                    bootbox.confirm("are you sure?", function (result) {
+                        if (result) {
+                            $.ajax({
+                                url: "/api/customers/" + btn.attr("data-customer-id"),
+                                method: "delete",
+                                success: function () {
+                                    btn.parents("tr").remove();
+                                }
+                            });
+                        }
+                    });
+                });
+
+
+            }); // function ready last curly brace
+*@

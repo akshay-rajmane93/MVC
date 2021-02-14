@@ -1,0 +1,20 @@
+﻿<ul class="nav navbar-nav navul" style="color:red">
+
+    <li class="dropdown">
+        <a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown"> Customers <span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu" style="background-color:black; ">
+
+            <li class="partial">@Html.ActionLink("View Customers", "Index", "Customer")</li>
+
+        </ul>
+    </li>
+    <li class="dropdown">
+        <a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown">Movies <span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu" style="background-color:black; ">
+
+            <li class="partial">@Html.ActionLink("View Movies", "Index", "Movies")</li>
+            
+        </ul>
+    </li>
+
+</ul>
