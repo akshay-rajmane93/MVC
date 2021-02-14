@@ -54,9 +54,7 @@ namespace Movieship
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            app.UseFacebookAuthentication(
-               appId: "463773871694003",
-               appSecret: "33a39afdb0f36f5b687f7f44d64130ed");
+           
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{
